@@ -45,7 +45,38 @@ router.delete("/:id", async (req,res)=>{
     }
 });
 // get a single user
+router.get("/:id", async (req,res) =>{
+    try {
+        const user = await User.findById(req.params.id);
+        // user._doc contains all the user properties
+        // seperate properties except for password and updatedAt in others
+        const { password, updatedAt, ...other} = user._doc;
+        res.status(200).json(other);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
 // follow user
+router.put("/:id/follow", async (req,res) =>{
+    if(req.body.userId !== req.params.id){
+        try {
+            const user = await User.findById(req.params.id);
+            const currentUser = await User.findById(req.body.userId);
+
+            if(!user.followers.includes(req.body.userId)){
+                await user.updateOne({$push: {followers: req.body.userId }});
+                await currentUser.updateOne({$push: {following: req.params.id }});
+                res.send(200).json("following new user");
+            }else{
+               res.status(403).json("you are following this user");
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }else{
+        res.status(403).json("you can't follow yourself")
+    }
+})
 // unfollow user
 
 module.exports = router;
