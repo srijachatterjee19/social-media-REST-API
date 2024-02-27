@@ -27,6 +27,20 @@ router.put("/", async (req,res)=>{
     }
 });
 //delete post
+router.delete("/", async (req,res)=>{
+    try {
+        const post = await Post.findById(req.params.id);
+        //if post belongs to current user 
+        if(post.userId === req.body.userId){
+            await post.deleteOne(); //update post schema
+            res.status(200).json("post has been deleted");
+        }else{
+            res.status(403).json("you can only update your post");
+        }
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
 //like post
 //get post
 //get timeline posts
