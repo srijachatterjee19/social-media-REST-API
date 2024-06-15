@@ -1,6 +1,6 @@
 # Social Media Back-End Server 
 
-Welcome to the Social Media Node-Mongo-Express App! This application is a basic social media platform built using Node.js, Express.js, and MongoDB. 
+Welcome to the Social Media Node-Mongo-Express App! This application is a basic social media API built using Node.js, Express.js, and MongoDB. 
 
 # Features 🧩
 Users can update their profiles, retrieve individual user details, and seamlessly follow or unfollow other users. The authentication system allows secure login and registration. Additionally, post management features enable users to create, update, delete, like, and retrieve posts
